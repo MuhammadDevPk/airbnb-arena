@@ -48,7 +48,7 @@ class ListingSearchTool implements Tool
     public function schema(JsonSchema $schema): array
     {
         return [
-            'query' => $schema->object()
+            'query' => $schema->string()
                 ->description('Natural language search query describing the desired listing')
                 ->required(),
             'limit' => $schema->integer()
