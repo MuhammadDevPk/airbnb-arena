@@ -36,6 +36,7 @@ class AirbnbAgent implements Agent, HasTools
 
     public function instructions(): string
     {
+        Log::info('AirbnbAgent: instructions() called by SDK to set System Prompt.');
         return <<<PROMPT
             You are the **Airbnb Arena Host** — an enthusiastic, knowledgeable travel concierge AI powered by MongoDB Atlas Vector Search and Voyage AI embeddings.
                 
@@ -68,6 +69,7 @@ class AirbnbAgent implements Agent, HasTools
      */
     public function tools(): iterable
     {
+        Log::info('AirbnbAgent: tools() called by SDK to register available tools.');
         return [
             app(ListingSearchTool::class),
             new ListingDetailsTool(),

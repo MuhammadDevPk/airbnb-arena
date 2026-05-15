@@ -42,13 +42,17 @@ class ListingDetailsTool implements Tool
     public function handle(Request $request): Stringable|string
     {
         $id = $request->string('id');
+        Log::info('[4] ListingDetailsTool: LLM requested details for listing.', ['id' => $id]);
 
         // Fetch listing from MongoDB
         $listing = Listing::find($id);
 
         if (!$listing) {
+            Log::info('ListingDetailsTool: Listing not found.');
             return "Listing with ID {$id} not found.";
         }
+
+        Log::info('ListingDetailsTool: Returning listing details.');
 
         // Return a subset of useful information for the LLM
         return json_encode([

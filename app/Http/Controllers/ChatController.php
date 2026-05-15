@@ -46,6 +46,11 @@ class ChatController extends Controller
         $userMessage = $request->input('message');
         $history = $request->input('history', []);
 
+        Log::info('Chat Request Received', ['message' => $userMessage, 'history' => $history]);
+
+
+        Log::info('[1] ChatController: Prompt built. Calling AirbnbAgent...', ['prompt_length' => strlen($prompt)]);
+
         try {
 
             // Build the prompt with conversation history for context
@@ -53,7 +58,10 @@ class ChatController extends Controller
 
             // Create the agent (via make() for dependency injection) and send the prompt
             $agent = AirbnbAgent::make();
+            Log::info('[2] ChatController: Agent initialized. Sending prompt to LLM (Gemini)...');
             $response = $agent->prompt($prompt, provider: 'gemini');
+
+            Log::info('[5] ChatController: LLM response received.', ['response_length' => strlen((string) $response)]);
 
             // Collect any structured listing data from the search tool
             $searchTool = app(ListingSearchTool::class);
@@ -78,6 +86,7 @@ class ChatController extends Controller
 
     private function buildPrompt(string $userMessage, array $history): string
     {
+        Log::info('ChatController: Building prompt from message and history...', ['history_count' => count($history)]);
 
         if (empty($history)) {
             return $userMessage;

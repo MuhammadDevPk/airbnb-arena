@@ -21,6 +21,7 @@ class EmbeddingService
 
     public function embedQuery(string $query): array
     {
+        Log::info('EmbeddingService: Generating embedding via Voyage AI provider.');
         $response = Embeddings::for([$query])
             ->dimensions($this->dimensions)
             ->generate(provider: 'voyageai');

@@ -72,15 +72,18 @@ class ListingSearchTool implements Tool
     public function handle(Request $request): Stringable|string
     {
         $query = (string) $request->string('query');
+        Log::info('[3] ListingSearchTool: LLM requested a search.', ['query' => $query]);
         $limit = $request->integer('limit', 5) ?: 5;
 
         Log::info('ListingSearchTool: Searching', ['query' => $query, 'limit' => $limit]);
 
         try {
             // Step 1: Generate a query embedding using Voyage AI (via SDK)
+            Log::info('ListingSearchTool: Requesting embedding from Voyage AI via EmbeddingService...');
             $queryEmbedding = $this->embeddingService->embedQuery($query);
 
             // Step 2: Use the Eloquent vectorSearch() method from mongodb/laravel-mongodb
+            Log::info('ListingSearchTool: Performing MongoDB Atlas Vector Search...');
             // Materialize results into a collection once to avoid double cursor iteration
             $results = Listing::vectorSearch(
                 index: 'vector_index',
@@ -153,6 +156,7 @@ class ListingSearchTool implements Tool
             }
 
             $count = count($agentLines);
+            Log::info('ListingSearchTool: Search complete.', ['results_found' => $count]);
             return "Found {$count} matching listings:\n\n" . implode("\n\n", $agentLines);
 
         } catch (\Exception $e) {
