@@ -49,7 +49,7 @@ class ChatController extends Controller
         Log::info('Chat Request Received', ['message' => $userMessage, 'history' => $history]);
 
 
-        Log::info('[1] ChatController: Prompt built. Calling AirbnbAgent...', ['prompt_length' => strlen($prompt)]);
+        Log::info('[1] ChatController: Prompt built. Calling AirbnbAgent...', ['prompt_length' => strlen($userMessage)]);
 
         try {
 
