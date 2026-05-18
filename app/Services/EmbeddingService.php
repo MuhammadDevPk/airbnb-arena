@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Laravel\Ai\Embeddings;
+use Illuminate\Support\Facades\Log;
 
 class EmbeddingService
 {

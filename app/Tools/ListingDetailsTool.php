@@ -7,6 +7,7 @@ use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Laravel\Ai\Contracts\Tool;
 use Laravel\Ai\Tools\Request;
 use Stringable;
+use Illuminate\Support\Facades\Log;
 
 /**
  * ListingDetailsTool — Fetches full listing details by ID.

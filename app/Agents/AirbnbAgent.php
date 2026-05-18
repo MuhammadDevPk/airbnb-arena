@@ -9,6 +9,7 @@ use Laravel\Ai\Attributes\Timeout;
 use Laravel\Ai\Contracts\Agent;
 use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Promptable;
+use Illuminate\Support\Facades\Log;
 
 /**
  * AirbnbAgent — The AI-powered travel concierge for Airbnb Arena.
